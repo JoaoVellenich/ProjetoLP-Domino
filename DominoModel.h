@@ -15,5 +15,5 @@ typedef struct Pecas
     Tipo_Domino pecas[N];
 }Tipo_pecas;
 
-Tipo_pecas criarPecas(Tipo_pecas pc);
+Tipo_pecas criarPecas();
 Tipo_pecas embaralharPecas(Tipo_pecas pc);

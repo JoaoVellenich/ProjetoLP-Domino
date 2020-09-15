@@ -4,4 +4,3 @@
 #include "DominoView.h"
 
 void executarJogo();
-

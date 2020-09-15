@@ -4,17 +4,18 @@
 
 #include "DominoController.h"
 
-void executarJogo(){
-    
+void executarJogo() {
+
     Tipo_pecas pc;
-    pc = criarPecas(pc);
+    
+    pc = criarPecas();
 
     int op;
 
     do
     {
         op = menu();
-        
+
         switch (op)
         {
         case 1:
@@ -33,5 +34,5 @@ void executarJogo(){
             break;
         }
     } while (op != 5);
-    
+
 }

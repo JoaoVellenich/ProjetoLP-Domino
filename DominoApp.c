@@ -4,6 +4,8 @@
 
 #include "DominoController.h"
 
-int main(){
+int main() {
+    
     executarJogo();
+
 }

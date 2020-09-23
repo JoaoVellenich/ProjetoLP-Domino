@@ -7,10 +7,11 @@
 void executarJogo() {
 
     Tipo_pecas pc;
+    Tipo_Jogadores Jogadores;
     
     pc = criarPecas();
 
-    int op;
+    int op, players;
 
     do
     {
@@ -19,7 +20,10 @@ void executarJogo() {
         switch (op)
         {
         case 1:
-            pc = criarPecas(pc);
+            players = menuIniciarJogo();
+            Jogadores = maoJogador(pc);
+            imprimirMao(Jogadores);
+            pc = arrumarPc(Jogadores, pc);
             break;
         case 2:
             imprimirPecasOrganizadas(pc);

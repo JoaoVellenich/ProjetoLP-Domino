@@ -52,3 +52,43 @@ Tipo_pecas embaralharPecas(Tipo_pecas pc) {
 
     return pc;
 }
+
+Tipo_Jogadores maoJogador(Tipo_pecas pc) {
+    Tipo_Jogadores player;
+
+    int numRep[7];
+    int numRand;
+
+    for (int i = 0; i < 7; i++) {
+        numRep[i] = 0;
+    }
+    for (int j = 0; j < 2; j++)
+    {
+        for (int i = 0; i < 7; i++) {
+            do {
+                numRand = rand() % N;
+            } while (numRep[numRand] == 1);
+
+            player.jogadores[j].pecas[i].face1 = pc.pecas[numRand].face1;
+            player.jogadores[j].pecas[i].face2 = pc.pecas[numRand].face2;
+        }
+    }
+
+    return player;
+}
+
+Tipo_pecas arrumarPc(Tipo_Jogadores Jogadores, Tipo_pecas pc) {
+    for (int i = 0; i < 27; i++)
+    {
+        for (int j = 0; j < 7; j++)
+        {
+            if (pc.pecas[i].face1 == Jogadores.jogadores[1].pecas[j].face1 && pc.pecas[i].face2 == Jogadores.jogadores[1].pecas[j].face2)
+            {
+                pc.pecas[i].face1 = -1;
+                pc.pecas[i].face2 = -1;
+            }
+        }
+    }
+
+    return pc;
+}

@@ -4,6 +4,9 @@
 
 #include "DominoModel.h"
 
+int quantidadeCompradaJogado1, quantidadeCompradaJogado2;
+int quantidadeMesa = 0;
+
 Tipo_pecas criarPecas() {
     Tipo_pecas pc;
 
@@ -56,39 +59,83 @@ Tipo_pecas embaralharPecas(Tipo_pecas pc) {
 Tipo_Jogadores maoJogador(Tipo_pecas pc) {
     Tipo_Jogadores player;
 
-    int numRep[7];
-    int numRand;
+    int i,j;
 
-    for (int i = 0; i < 7; i++) {
-        numRep[i] = 0;
-    }
-    for (int j = 0; j < 2; j++)
+    for (i = 0; i < 7; i++)
     {
-        for (int i = 0; i < 7; i++) {
-            do {
-                numRand = rand() % N;
-            } while (numRep[numRand] == 1);
-
-            player.jogadores[j].pecas[i].face1 = pc.pecas[numRand].face1;
-            player.jogadores[j].pecas[i].face2 = pc.pecas[numRand].face2;
-        }
+        player.jogadores[0].pecas[i].face1 = pc.pecas[i].face1;
+        player.jogadores[0].pecas[i].face2 = pc.pecas[i].face2;
     }
+    
+    for (j = 0; j < 7; j++)
+    {
+        player.jogadores[1].pecas[j].face1 = pc.pecas[j + 7].face1;
+        player.jogadores[1].pecas[j].face2 = pc.pecas[j + 7].face2;
+    }
+
+    quantidadeCompradaJogado1 = i;
+    quantidadeCompradaJogado2 = j;
 
     return player;
 }
 
-Tipo_pecas arrumarPc(Tipo_Jogadores Jogadores, Tipo_pecas pc) {
-    for (int i = 0; i < 27; i++)
+Tipo_pecas arrumarPc(Tipo_pecas pc) {
+    int total = quantidadeCompradaJogado1 + quantidadeCompradaJogado2;
+
+    for (int i = 0; i < total; i++)
     {
-        for (int j = 0; j < 7; j++)
-        {
-            if (pc.pecas[i].face1 == Jogadores.jogadores[1].pecas[j].face1 && pc.pecas[i].face2 == Jogadores.jogadores[1].pecas[j].face2)
-            {
-                pc.pecas[i].face1 = -1;
-                pc.pecas[i].face2 = -1;
-            }
-        }
+        pc.pecas[i].face1 = -1;
+        pc.pecas[i].face2 = -1;
     }
 
     return pc;
 }
+
+Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num) {
+
+    int total = quantidadeCompradaJogado1 + quantidadeCompradaJogado2;
+    if (num == 1)
+    {
+        player.jogadores[0].pecas[quantidadeCompradaJogado1].face1 = pc.pecas[total].face1;
+        player.jogadores[0].pecas[quantidadeCompradaJogado1].face2 = pc.pecas[total].face2;
+        pc.pecas[total].face1 = -1;
+        pc.pecas[total].face2 = -1;
+        quantidadeCompradaJogado1++;
+    }
+    else if (num == 2)
+    {
+        player.jogadores[1].pecas[quantidadeCompradaJogado2].face1 = pc.pecas[total].face1;
+        player.jogadores[1].pecas[quantidadeCompradaJogado2].face2 = pc.pecas[total].face2;
+        pc.pecas[total].face1 = -1;
+        pc.pecas[total].face2 = -1;
+        quantidadeCompradaJogado2++;
+    }
+    
+    return player;
+}
+
+Tipo_pecas irMesa(Tipo_pecas pecasDesenhada ,Tipo_Jogadores player, int jogador, int numPeca) {
+
+    pecasDesenhada.pecas[quantidadeMesa].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
+    pecasDesenhada.pecas[quantidadeMesa].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+
+    quantidadeMesa++;
+
+    return pecasDesenhada;
+
+}
+
+
+
+int retornarQtdJogador1() {
+    return quantidadeCompradaJogado1;
+}
+int retornarQtdJogador2() {
+    return quantidadeCompradaJogado2;
+}
+int retornarQtdMesa() {
+    return quantidadeMesa;
+}
+
+
+

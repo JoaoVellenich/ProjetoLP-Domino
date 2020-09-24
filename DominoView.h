@@ -7,7 +7,12 @@
 
 void imprimirPecasOrganizadas(Tipo_pecas pc);
 void imprimirPecas(Tipo_pecas pc);
-void imprimirMao(Tipo_Jogadores mao);
+void imprimirMao(Tipo_Jogadores mao, int op);
 int menu();
 int menuIniciarJogo();
 void imprirPcOrganizado(Tipo_pecas pc);
+int menuInGame();
+int menuComprarPecas();
+void desenharMesa(Tipo_pecas pecasDesenhada);
+int menuMesa();
+int pecaDescartada();

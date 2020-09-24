@@ -17,14 +17,22 @@ typedef struct Pecas
 
 typedef struct mao 
 {
-    Tipo_Domino pecas[7];
+    Tipo_Domino pecas[N];
 }Tipo_mao;
 
-typedef struct jogadores {
+typedef struct jogadores 
+{
     Tipo_mao jogadores[2];
 }Tipo_Jogadores;
 
 Tipo_pecas criarPecas();
 Tipo_pecas embaralharPecas(Tipo_pecas pc);
 Tipo_Jogadores maoJogador(Tipo_pecas pc);
-Tipo_pecas arrumarPc(Tipo_Jogadores Jogadores, Tipo_pecas pc);
+Tipo_pecas arrumarPc(Tipo_pecas pc);
+Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num);
+Tipo_pecas irMesa(Tipo_pecas pecasDesenhada, Tipo_Jogadores player, int jogador, int numPeca);
+
+
+int retornarQtdJogador1();
+int retornarQtdJogador2();
+int retornarQtdMesa();

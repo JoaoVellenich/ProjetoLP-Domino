@@ -6,12 +6,15 @@
 
 void executarJogo() {
 
-    Tipo_pecas pc;
+    Tipo_pecas pc, colocadaMesa;
     Tipo_Jogadores Jogadores;
     
     pc = criarPecas();
+    colocadaMesa = criarPecas();
 
     int op, players;
+    int opMenuInGame = 0;
+    int opComprar, opMesa, opColocarNaMesa;
 
     do
     {
@@ -21,9 +24,40 @@ void executarJogo() {
         {
         case 1:
             players = menuIniciarJogo();
-            Jogadores = maoJogador(pc);
-            imprimirMao(Jogadores);
-            pc = arrumarPc(Jogadores, pc);
+            pc = embaralharPecas(pc);
+            do
+            {
+                opMenuInGame = menuInGame();
+                switch (opMenuInGame)
+                {
+                case 1:
+                    Jogadores = maoJogador(pc);
+                    pc = arrumarPc(pc);
+                    break;
+                case 2:
+                    opMesa = menuMesa();
+                    imprimirMao(Jogadores, opMesa);
+                    opColocarNaMesa = pecaDescartada();
+                    colocadaMesa = irMesa(colocadaMesa, Jogadores, opMesa, opColocarNaMesa);
+                    desenharMesa(colocadaMesa);
+                    break;
+                case 3:
+                    opMesa = menuMesa();
+                    imprimirMao(Jogadores, opMesa);
+                    pc = arrumarPc(pc);
+                    break;
+                case 4:
+                    do
+                    {
+                        opComprar = menuComprarPecas();
+                        Jogadores = comprarPecas(Jogadores, pc, opComprar);
+                    } while (opComprar != 3);
+                    break;
+                default:
+                    break;
+                }
+            } while (opMenuInGame != 5);
+            
             break;
         case 2:
             imprimirPecasOrganizadas(pc);

@@ -26,6 +26,18 @@ Tipo_pecas criarPecas() {
     return pc;
 }
 
+Tipo_pecas criarMesa() {
+    Tipo_pecas mesa;
+
+    for (int i = 0; i < 28; i++)
+    {
+        mesa.pecas[i].face1 = -1;
+        mesa.pecas[i].face2 = -1;
+    }
+
+    return mesa;
+}
+
 Tipo_pecas embaralharPecas(Tipo_pecas pc) {
     srand(time(NULL));//inicializa a funcao rand() com um valor semente
     int numRep[N];//armazena os numeros repetidos
@@ -114,13 +126,42 @@ Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num) {
     return player;
 }
 
-Tipo_pecas irMesa(Tipo_pecas pecasDesenhada ,Tipo_Jogadores player, int jogador, int numPeca) {
+Tipo_pecas irMesa(Tipo_pecas pecasDesenhada ,Tipo_Jogadores player, int jogador, int numPeca, int pos) {
 
-    pecasDesenhada.pecas[quantidadeMesa].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
-    pecasDesenhada.pecas[quantidadeMesa].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+    if (pecasDesenhada.pecas[0].face1 == -1)
+    {
+        pecasDesenhada.pecas[quantidadeMesa].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
+        pecasDesenhada.pecas[quantidadeMesa].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+        quantidadeMesa++;
+    }
+    else if (pos == 1)
+    {
+        if (pecasDesenhada.pecas[quantidadeMesa -1].face1 == player.jogadores[jogador - 1].pecas[numPeca - 1].face2)
+        {
+            pecasDesenhada.pecas[quantidadeMesa].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
+            pecasDesenhada.pecas[quantidadeMesa].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+            quantidadeMesa++;
+        }
+        else
+        {
+            imprimirErro();
+        }
+    }
+    else if (pos == 2)
+    {
+        if (pecasDesenhada.pecas[quantidadeMesa -1].face2 == player.jogadores[jogador - 1].pecas[numPeca - 1].face1)
+        {
+            pecasDesenhada.pecas[quantidadeMesa].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
+            pecasDesenhada.pecas[quantidadeMesa].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+            quantidadeMesa++;
+        }
+        else
+        {
+            imprimirErro();
+        }
 
-    quantidadeMesa++;
-
+    }
+    
     return pecasDesenhada;
 
 }

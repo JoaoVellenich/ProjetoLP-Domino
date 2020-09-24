@@ -26,11 +26,12 @@ typedef struct jogadores
 }Tipo_Jogadores;
 
 Tipo_pecas criarPecas();
+Tipo_pecas criarMesa();
 Tipo_pecas embaralharPecas(Tipo_pecas pc);
 Tipo_Jogadores maoJogador(Tipo_pecas pc);
 Tipo_pecas arrumarPc(Tipo_pecas pc);
 Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num);
-Tipo_pecas irMesa(Tipo_pecas pecasDesenhada, Tipo_Jogadores player, int jogador, int numPeca);
+Tipo_pecas irMesa(Tipo_pecas pecasDesenhada, Tipo_Jogadores player, int jogador, int numPeca, int pos);
 
 
 int retornarQtdJogador1();

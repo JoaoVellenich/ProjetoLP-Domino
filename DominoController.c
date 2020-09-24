@@ -10,11 +10,11 @@ void executarJogo() {
     Tipo_Jogadores Jogadores;
     
     pc = criarPecas();
-    colocadaMesa = criarPecas();
+    colocadaMesa = criarMesa();
 
     int op, players;
     int opMenuInGame = 0;
-    int opComprar, opMesa, opColocarNaMesa;
+    int opComprar, opMesa, opColocarNaMesa, opPos;
 
     do
     {
@@ -38,7 +38,8 @@ void executarJogo() {
                     opMesa = menuMesa();
                     imprimirMao(Jogadores, opMesa);
                     opColocarNaMesa = pecaDescartada();
-                    colocadaMesa = irMesa(colocadaMesa, Jogadores, opMesa, opColocarNaMesa);
+                    opPos = posPecaNaMesa();
+                    colocadaMesa = irMesa(colocadaMesa, Jogadores, opMesa, opColocarNaMesa, opPos);
                     desenharMesa(colocadaMesa);
                     break;
                 case 3:

@@ -140,3 +140,16 @@ int pecaDescartada() {
 
     return op;
 }
+
+int posPecaNaMesa() {
+    int op;
+
+    printf("Qual a posicao?\n(1) Antes\n (2) Depois\n");
+    scanf_s("%d", &op);
+
+    return op;
+}
+
+void imprimirErro() {
+    printf("ERRO LOCAL INVALIDO");
+}

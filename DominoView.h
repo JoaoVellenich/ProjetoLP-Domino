@@ -16,3 +16,5 @@ int menuComprarPecas();
 void desenharMesa(Tipo_pecas pecasDesenhada);
 int menuMesa();
 int pecaDescartada();
+int posPecaNaMesa();
+void imprimirErro();

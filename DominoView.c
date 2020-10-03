@@ -33,7 +33,7 @@ int menu() {
         printf("(3) Continuar\n");
         printf("(4) Regras\n");
         printf("(5) Sair\n");
-        printf("Qula sua opcao? \n");
+        printf("Selecione sua opcao: \n");
         scanf_s("%d", &op);
     } while (op < 0 || op > 5);
 
@@ -97,10 +97,10 @@ int menuInGame() {
     int op;
 
     do{
-        printf("\n(1) Distribuir Peças\n");
+        printf("\n(1) Distribuir Peï¿½as\n");
         printf("(2) Mostrar Mesa\n");
         printf("(3) Mostrar Mao\n");
-        printf("(4) Comprar Peças\n");
+        printf("(4) Comprar Peï¿½as\n");
         printf("(5) Finalizar o Jogo\n");
         scanf_s("%d", &op);
     } while (op < 0 || op > 5);
@@ -154,7 +154,7 @@ int pecaDescartada() {
 int posPecaNaMesa() {
     int op;
 
-    printf("Qual a posicao?\n(1) Antes\n (2) Depois\n");
+    printf("Qual a posicao?\n(1) Antes\n(2) Depois\n");
     scanf_s("%d", &op);
 
     return op;
@@ -165,9 +165,9 @@ void imprimirErro() {
 }
 
 void mostrarRegras() {
-    printf("As  regras  do  jogo  são  bem  simples:  cada  jogador  pega  sete  peças  e  pode  comprarsempre que precisar de uma peça para poder jogar e quantas vezes for necessário. Dá-se inícioao jogo o jogador que tirar a pedra “seis-seis”. Caso ninguém tenha o tirado, inicia-se o jogadorque tiver a peça com os números repetidos mais altos, ou seja, “cinco-cinco”, “quatro-quatro”, eassim  sucessivamente.  O  jogo  acontece  no  sentido  anti-horário  e  os  jogadores  devem  colocarpeças que tenham os mesmos números das peças que se encontram na ponta do jogo. O jogadorque  começa  a  partida  leva  vantagem.  Este  é  um  conceito  importante  para  a  estratégia  dodominó, pois o jogador que começa, normalmente, é o que leva a vantagem durante a partida.\n\nCada   jogador,   no   seu   turno,   deve   colocar   uma   das   suas   peças   em   uma   das   2 extremidades  abertas,  de  forma  que  os  pontos  de  um  dos  lados  coincida  com  os  pontos  daextremidade onde está sendo colocada. As dobradas são colocadas de maneira transversal parafacilitar sua localização. Quando o jogador coloca sua peça sobre a mesa, seu turno se acaba epassa-se ao seguinte jogador.\n\nSe  um  jogador  não  puder  jogar,  deverá  “comprar”  do  monte  tantas  peças  como  foremnecessárias. Se não houver peças no monte, passará o turno ao seguinte jogador.\n\n");
+    printf("As  regras  do  jogo  sï¿½o  bem  simples:  cada  jogador  pega  sete  peï¿½as  e  pode  comprar sempre que precisar de uma peï¿½a para poder jogar e quantas vezes for necessï¿½rio. Dï¿½-se inï¿½cio ao jogo o jogador que tirar a pedra ï¿½seis-seisï¿½. Caso ninguï¿½m tenha o tirado, inicia-se o jogador que tiver a peï¿½a com os nï¿½meros repetidos mais altos, ou seja, ï¿½cinco-cincoï¿½, ï¿½quatro-quatroï¿½, e assim  sucessivamente.  O  jogo  acontece  no  sentido  anti-horï¿½rio  e  os  jogadores  devem  colocar peï¿½as que tenham os mesmos nï¿½meros das peï¿½as que se encontram na ponta do jogo. O jogador que  comeï¿½a  a  partida  leva  vantagem.  Este  ï¿½  um  conceito  importante  para  a  estratï¿½gia  do dominï¿½, pois o jogador que comeï¿½a, normalmente, ï¿½ o que leva a vantagem durante a partida.\n\nCada   jogador,   no   seu   turno,   deve   colocar   uma   das   suas   peï¿½as   em   uma   das   2 extremidades  abertas,  de  forma  que  os  pontos  de  um  dos  lados  coincida  com  os  pontos  da extremidade onde estï¿½ sendo colocada. As dobradas sï¿½o colocadas de maneira transversal para facilitar sua localizaï¿½ï¿½o. Quando o jogador coloca sua peï¿½a sobre a mesa, seu turno se acaba e passa-se ao seguinte jogador.\n\nSe  um  jogador  nï¿½o  puder  jogar,  deverï¿½  ï¿½comprarï¿½  do  monte  tantas  peï¿½as  como  forem necessï¿½rias. Se nï¿½o houver peï¿½as no monte, passarï¿½ o turno ao seguinte jogador.\n\n");
 }
 
 void mostrarVencedor() {
-    printf("O grande vencedor é o jogador: %d", vverificarVencedor());
+    printf("O grande vencedor ï¿½ o jogador: %d", vverificarVencedor());
 }

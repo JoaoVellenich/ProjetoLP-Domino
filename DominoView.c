@@ -30,7 +30,7 @@ int menu() {
     {
         printf("(1) Iniciar Jogo\n");
         printf("(2) Carregar Jogo\n");
-        printf("(3) Continuar\n");
+        printf("(3) Continuar Jogo\n");
         printf("(4) Regras\n");
         printf("(5) Sair\n");
         printf("Selecione sua opcao: \n");
@@ -47,7 +47,7 @@ int menuIniciarJogo() {
     do
     {
         printf("INICIAR JOGO:\n\nQuantos jogadores?\n");
-        printf("1 Jogador\n2 Jogadores");
+        printf("1 Jogador\n2 Jogadores\n");
         scanf_s("%d", &op);
     } while (op < 0 || op > 2);
 
@@ -97,10 +97,10 @@ int menuInGame() {
     int op;
 
     do{
-        printf("\n(1) Distribuir Pe�as\n");
+        printf("\n(1) Distribuir Pecas\n");
         printf("(2) Mostrar Mesa\n");
         printf("(3) Mostrar Mao\n");
-        printf("(4) Comprar Pe�as\n");
+        printf("(4) Comprar Pecas\n");
         printf("(5) Finalizar o Jogo\n");
         scanf_s("%d", &op);
     } while (op < 0 || op > 5);
@@ -161,13 +161,13 @@ int posPecaNaMesa() {
 }
 
 void imprimirErro() {
-    printf("ERRO LOCAL INVALIDO");
+    printf("ERRO: POSICAO INVALIDA\n");
 }
 
 void mostrarRegras() {
-    printf("As  regras  do  jogo  s�o  bem  simples:  cada  jogador  pega  sete  pe�as  e  pode  comprar sempre que precisar de uma pe�a para poder jogar e quantas vezes for necess�rio. D�-se in�cio ao jogo o jogador que tirar a pedra �seis-seis�. Caso ningu�m tenha o tirado, inicia-se o jogador que tiver a pe�a com os n�meros repetidos mais altos, ou seja, �cinco-cinco�, �quatro-quatro�, e assim  sucessivamente.  O  jogo  acontece  no  sentido  anti-hor�rio  e  os  jogadores  devem  colocar pe�as que tenham os mesmos n�meros das pe�as que se encontram na ponta do jogo. O jogador que  come�a  a  partida  leva  vantagem.  Este  �  um  conceito  importante  para  a  estrat�gia  do domin�, pois o jogador que come�a, normalmente, � o que leva a vantagem durante a partida.\n\nCada   jogador,   no   seu   turno,   deve   colocar   uma   das   suas   pe�as   em   uma   das   2 extremidades  abertas,  de  forma  que  os  pontos  de  um  dos  lados  coincida  com  os  pontos  da extremidade onde est� sendo colocada. As dobradas s�o colocadas de maneira transversal para facilitar sua localiza��o. Quando o jogador coloca sua pe�a sobre a mesa, seu turno se acaba e passa-se ao seguinte jogador.\n\nSe  um  jogador  n�o  puder  jogar,  dever�  �comprar�  do  monte  tantas  pe�as  como  forem necess�rias. Se n�o houver pe�as no monte, passar� o turno ao seguinte jogador.\n\n");
+    printf("As regras do jogo sao bem simples: cada jogador pega sete pecas e pode comprar sempre que precisar de uma peca para poder jogar e quantas vezes for necessario. Da inicio ao jogo o jogador que tirar a pedra seis-seis. Caso nenhum jogador a possua, inicia o jogo aquele que tiver a peca com os numeros repetidos mais altos, ou seja, cinco-cinco, quatro-quatro, etc. O jogo acontece no sentido anti-horario e os jogadores devem colocar pecas que tenham os mesmos numeros das pecas que se encontram na ponta do jogo. O jogador que comeca a partida leva vantagem. Este e um conceito importante para a estrategia do domino, pois o jogador que comeca, normalmente, e o que leva a vantagem durante a partida.\n\nCada jogador, no seu turno, deve colocar uma das suas pecas em uma das 2 extremidades abertas, de forma que os pontos de um dos lados coincida com os pontos da extremidade onde esta sendo colocada. As dobradas sao colocadas de maneira transversal para facilitar sua localizacao. Quando o jogador coloca sua peca sobre a mesa, seu turno se acaba e passa-se ao seguinte jogador.\n\nSe um jogador nao puder jogar, devera comprar do monte tantas pecas  como  forem necessarias. Se nao houver pecas no monte, passara o turno ao seguinte jogador.\n\n");
 }
 
 void mostrarVencedor() {
-    printf("O grande vencedor � o jogador: %d", vverificarVencedor());
+    printf("O grande vencedor e o jogador: %d\n", vverificarVencedor());
 }

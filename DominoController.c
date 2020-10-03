@@ -23,7 +23,7 @@ void executarJogo() {
 
         switch (op)
         {
-        case 1:
+        case 1://iniciar jogo
             players = menuIniciarJogo();
             pc = embaralharPecas(pc);
             do
@@ -36,11 +36,11 @@ void executarJogo() {
                     pc = arrumarPc(pc);
                     break;
                 case 2:
-                    opMesa = menuMesa(); //qual jogador irá colocar na mesa
+                    opMesa = menuMesa(); //qual jogador ira colocar na mesa
                     imprimirMao(Jogadores, opMesa); //imprime a mao do jogador
                     desenharMesa(mesa); //desenha a mesa
-                    opColocarNaMesa = pecaDescartada(); //seleciona a peça
-                    opPos = posPecaNaMesa(); //Posição da peça na mesa
+                    opColocarNaMesa = pecaDescartada(); //seleciona a peca
+                    opPos = posPecaNaMesa(); //Posicao da peca na mesa
                     mesa = irMesa(mesa, Jogadores, opMesa, opColocarNaMesa, opPos); //coloca a peca no array mesa
                     desenharMesa(mesa); //desenha a mesa
                     Jogadores = descartePecas(Jogadores, opMesa, opColocarNaMesa); //arruma o array de jogador
@@ -70,16 +70,16 @@ void executarJogo() {
             } while (opMenuInGame != 5);
             
             break;
-        case 2:
+        case 2://carregar jogo
             imprimirPecasOrganizadas(pc);
             break;
-        case 3:
+        case 3://continuar jogo
             pc = embaralharPecas(pc);
             break;
-        case 4:
+        case 4://mostrar regras
             mostrarRegras();
             break;
-        default:
+        default://sair
             break;
         }
     } while (op != 5);

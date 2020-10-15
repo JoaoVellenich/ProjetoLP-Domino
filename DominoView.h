@@ -6,7 +6,7 @@
 #include "DominoModel.h"
 
 void imprimirPecasOrganizadas(Tipo_pecas pc);
-void imprimirPecas(Tipo_pecas pc);
+void imprimirPecas(Tipo_Mesa pc);
 void imprimirMao(Tipo_Jogadores mao, int op);
 int menu();
 int menuIniciarJogo();
@@ -20,3 +20,6 @@ int posPecaNaMesa();
 void imprimirErro();
 void mostrarRegras();
 void mostrarVencedor();
+void imprimirDetalhes();
+void saveStatus();
+void erroLoadGame();

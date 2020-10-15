@@ -5,6 +5,7 @@
 #include "DominoView.h"
 #include "DominoModel.h"
 
+//DELETAR INUTIL
 void imprimirPecasOrganizadas(Tipo_pecas pc) {
     for (int j = 0; j < 28; j++) {
         if (pc.pecas[j].face2 == 6) {
@@ -16,10 +17,11 @@ void imprimirPecasOrganizadas(Tipo_pecas pc) {
     }
 }
 
-void imprimirPecas(Tipo_pecas pc) {
-    for (int i = 0; i < N; i++)
+//DELETAR INUTIL
+void imprimirPecas(Tipo_Mesa pc) {
+    for (int i = 0; i < 56; i++)
     {
-        printf("[%d|%d]\n", pc.pecas[i].face1, pc.pecas[i].face2);
+        printf("[%d|%d]\n", pc.mesa[i].face1, pc.mesa[i].face2);
     }
 }
 
@@ -28,9 +30,9 @@ int menu() {
     int op;
     do
     {
-        printf("(1) Iniciar Jogo\n");
-        printf("(2) Carregar Jogo\n");
-        printf("(3) Continuar Jogo\n");
+        printf("(1) Iniciar Jogo / Continuar\n");
+        printf("(2) Salvar Jogo\n");
+        printf("(3) Carregar Jogo\n");
         printf("(4) Regras\n");
         printf("(5) Sair\n");
         printf("Selecione sua opcao: \n");
@@ -58,7 +60,7 @@ void imprimirMao(Tipo_Jogadores mao, int op) {
 
     if (op == 1)
     {
-        printf("\n\nMao Jogador 1:\n ");
+        printf("Mao Jogador 1:\n ");
         for (int i = 0; i < retornarQtdJogador1(); i++)
         {   
             if (mao.jogadores[0].pecas[i].face1 != -1)
@@ -70,7 +72,7 @@ void imprimirMao(Tipo_Jogadores mao, int op) {
     }
     else if (op == 2)
     {
-        printf("\n\nMao Jogador 2:\n ");
+        printf("Mao Jogador 2:\n ");
         for (int i = 0; i < retornarQtdJogador2(); i++)
         {
             if (mao.jogadores[1].pecas[i].face1 != -1)
@@ -82,6 +84,7 @@ void imprimirMao(Tipo_Jogadores mao, int op) {
     
 }
 
+//DELETAR INUTIL
 void imprirPcOrganizado(Tipo_pecas pc) {
     for (int i = 0; i < 27; i++)
     {
@@ -97,17 +100,17 @@ int menuInGame() {
     int op;
 
     do{
-        printf("\n(1) Distribuir Pecas\n");
-        printf("(2) Mostrar Mesa\n");
-        printf("(3) Mostrar Mao\n");
-        printf("(4) Comprar Pecas\n");
-        printf("(5) Finalizar o Jogo\n");
+        printf("\n(1) Proximo Player\n");
+        printf("(2) Colocar Peca Na Mesa\n");
+        printf("(3) Comprar Pecas\n");
+        printf("(4) Finalizar o Jogo\n");
         scanf_s("%d", &op);
-    } while (op < 0 || op > 5);
+    } while (op < 0 || op > 4);
 
     return op;
 }
 
+//DELETAR INUTIL
 int menuComprarPecas() {
     int op = 0;
 
@@ -122,6 +125,8 @@ int menuComprarPecas() {
 
 void desenharMesa(Tipo_Mesa pecasDesenhada) {
 
+    printf("MESA:\n");
+
     for (int i = 0; i < 56; i++)
     {
         if (pecasDesenhada.mesa[i].face1 != -1)
@@ -132,6 +137,7 @@ void desenharMesa(Tipo_Mesa pecasDesenhada) {
     
 }
 
+//DELETAR INUTIL
 int menuMesa() {
     int op;
 
@@ -170,4 +176,16 @@ void mostrarRegras() {
 
 void mostrarVencedor() {
     printf("O grande vencedor e o jogador: %d\n", vverificarVencedor());
+}
+
+void imprimirDetalhes() {
+    printf("\n==========\n");
+}
+
+void saveStatus() {
+    printf("\nSave Game Realizado\n");
+}
+
+void erroLoadGame() {
+    printf("\nERRO ARQUIVO NAO ENCONTRADO\n");
 }

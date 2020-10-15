@@ -15,7 +15,18 @@ void executarJogo() {
 
     int op, players;
     int opMenuInGame = 0;
-    int opComprar, opMesa, opColocarNaMesa, opPos;
+    int opComprar, opMesa, opColocarNaMesa, opPos, vez;
+
+    pc = embaralharPecas(pc);
+
+    Jogadores = maoJogador(pc);
+    pc = arrumarPc(pc);
+
+    int primeiroDescarte = primeiraPeca(Jogadores);
+    vez = retornarPrimeioJogador();
+
+    mesa = irMesa(mesa, Jogadores, vez, primeiroDescarte, 1);
+    Jogadores = descartePecas(Jogadores, vez, primeiroDescarte);
 
     do
     {
@@ -24,57 +35,58 @@ void executarJogo() {
         switch (op)
         {
         case 1://iniciar jogo
+            
             players = menuIniciarJogo();
-            pc = embaralharPecas(pc);
+
             do
             {
+                imprimirDetalhes();
+                desenharMesa(mesa); //desenha a mesa
+                imprimirDetalhes();
+                imprimirMao(Jogadores, vez); //imprime a mao do jogador
+                imprimirDetalhes();
+
                 opMenuInGame = menuInGame();
+    
                 switch (opMenuInGame)
                 {
-                case 1:
-                    Jogadores = maoJogador(pc);
-                    pc = arrumarPc(pc);
+                case 1://Proximo Jogador
+                    vez = proximoPlayer(vez);
                     break;
-                case 2:
-                    opMesa = menuMesa(); //qual jogador ira colocar na mesa
-                    imprimirMao(Jogadores, opMesa); //imprime a mao do jogador
-                    desenharMesa(mesa); //desenha a mesa
+                case 2://Colocar na Mesa
                     opColocarNaMesa = pecaDescartada(); //seleciona a peca
                     opPos = posPecaNaMesa(); //Posicao da peca na mesa
-                    mesa = irMesa(mesa, Jogadores, opMesa, opColocarNaMesa, opPos); //coloca a peca no array mesa
-                    desenharMesa(mesa); //desenha a mesa
-                    Jogadores = descartePecas(Jogadores, opMesa, opColocarNaMesa); //arruma o array de jogador
-                    imprimirMao(Jogadores, opMesa); //imprime a mao
+                    mesa = irMesa(mesa, Jogadores, vez, opColocarNaMesa, opPos); //coloca a peca no array mesa
+                    Jogadores = descartePecas(Jogadores, vez, opColocarNaMesa); //arruma o array de jogador
                     break;
-                case 3:
-                    opMesa = menuMesa();
-                    imprimirMao(Jogadores, opMesa);
-                    pc = arrumarPc(pc);
-                    break;
-                case 4:
-                    do
-                    {
-                        opComprar = menuComprarPecas();
-                        Jogadores = comprarPecas(Jogadores, pc, opComprar);
-                        imprimirMao(Jogadores, opComprar);
-                    } while (opComprar != 3);
+                case 3://Comprar Pecas
+                    Jogadores = comprarPecas(Jogadores, pc, vez);
                     break;
                 default:
                     break;
                 }
                 if (vverificarVencedor() == 1 || vverificarVencedor() == 2)
                 {
-                    mostrarVencedor;
+                    mostrarVencedor();
+
+                    pc = criarPecas();
+                    mesa = criarMesa();
+
                     break;
                 }
-            } while (opMenuInGame != 5);
+            } while (opMenuInGame != 4);
             
             break;
         case 2://carregar jogo
-            imprimirPecasOrganizadas(pc);
+            saveGame(vez, pc, mesa, Jogadores);
             break;
         case 3://continuar jogo
-            pc = embaralharPecas(pc);
+            carregarJogo();
+            vez = retornarVez();
+            pc = retornarPecas();
+            mesa = retornarMesa();
+            Jogadores = retornarJogadores();
+            imprimirPecas(mesa);
             break;
         case 4://mostrar regras
             mostrarRegras();

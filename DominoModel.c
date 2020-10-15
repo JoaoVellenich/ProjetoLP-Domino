@@ -10,6 +10,13 @@ int quantidadeDepois = 0;
 
 int pecaNaMao[2] = { 0, 0};
 
+int primeiroJogador = 0;
+
+int vez_Save;
+Tipo_pecas pc_Save;
+Tipo_Mesa mesa_Save;
+Tipo_Jogadores jogadores_Save;
+
 
 Tipo_pecas criarPecas() {
     Tipo_pecas pc;
@@ -37,6 +44,8 @@ Tipo_Mesa criarMesa() {
     {
         mesa.mesa[i].face1 = -1;
         mesa.mesa[i].face2 = -1;
+        mesa_Save.mesa[i].face1 = -1;
+        mesa_Save.mesa[i].face2 = -1;
     }
 
     return mesa;
@@ -157,6 +166,15 @@ Tipo_Mesa irMesa(Tipo_Mesa pecasDesenhada ,Tipo_Jogadores player, int jogador, i
 
             quantidadeAntes++;
         }
+        else if (pecasDesenhada.mesa[28 - quantidadeAntes].face1 == player.jogadores[jogador - 1].pecas[numPeca - 1].face1)
+        {
+            pecasDesenhada.mesa[27 - quantidadeAntes].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+            pecasDesenhada.mesa[27 - quantidadeAntes].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
+
+            pecaNaMao[jogador - 1] --;
+
+            quantidadeAntes++;
+        }
         else
         {
             imprimirErro();
@@ -172,6 +190,15 @@ Tipo_Mesa irMesa(Tipo_Mesa pecasDesenhada ,Tipo_Jogadores player, int jogador, i
             pecaNaMao[jogador - 1] --;
 
             quantidadeDepois ++;
+        }
+        else if (pecasDesenhada.mesa[quantidadeDepois + 28].face2 == player.jogadores[jogador - 1].pecas[numPeca - 1].face2)
+        {
+            pecasDesenhada.mesa[quantidadeDepois + 29].face1 = player.jogadores[jogador - 1].pecas[numPeca - 1].face2;
+            pecasDesenhada.mesa[quantidadeDepois + 29].face2 = player.jogadores[jogador - 1].pecas[numPeca - 1].face1;
+
+            pecaNaMao[jogador - 1] --;
+
+            quantidadeDepois++;
         }
         else
         {
@@ -193,6 +220,53 @@ Tipo_Jogadores descartePecas(Tipo_Jogadores Player, int numPlayer, int peca) {
 
 }
 
+int primeiraPeca(Tipo_Jogadores Player) {
+    int maiorJogador1 = -1;
+    int maiorJogador2 = -1;
+
+    int numPeca1 = -1;
+    int numPeca2 = -1;
+
+    int primeiraPeca = -1;
+
+    for (int i = 0; i < 7; i++)
+    {
+        if (Player.jogadores[0].pecas[i].face1 == Player.jogadores[0].pecas[i].face2)
+        {
+            if (Player.jogadores[0].pecas[i].face1 > maiorJogador1)
+            {
+                maiorJogador1 = Player.jogadores[0].pecas[i].face1;
+                numPeca1 = i+1;
+            }
+        }
+    }
+
+    for (int i = 0; i < 7; i++)
+    {
+        if (Player.jogadores[1].pecas[i].face1 == Player.jogadores[1].pecas[i].face2)
+        {
+            if (Player.jogadores[1].pecas[i].face1 > maiorJogador2)
+            {
+                maiorJogador2 = Player.jogadores[1].pecas[i].face1;
+                numPeca2 = i+1;
+            }
+        }
+    }
+
+    if (maiorJogador1 > maiorJogador2)
+    {
+        primeiroJogador = 1;
+        primeiraPeca = numPeca1;
+    }
+    else if (maiorJogador2 > maiorJogador1)
+    {
+        primeiroJogador = 2;
+        primeiraPeca = numPeca2;
+    }
+
+    return primeiraPeca;
+}
+
 int vverificarVencedor() {
     
     int vencedor = 0;
@@ -209,6 +283,19 @@ int vverificarVencedor() {
     return vencedor;
 }
 
+int proximoPlayer(int vez) {
+    if (vez == 1)
+    {
+        vez = 2;
+    }
+    else if (vez == 2)
+    {
+        vez = 1;
+    }
+
+    return vez;
+}
+
 int retornarQtdJogador1() {
     return quantidadeCompradaJogado1;
 }
@@ -216,6 +303,91 @@ int retornarQtdJogador2() {
     return quantidadeCompradaJogado2;
 }
 
+int retornarPrimeioJogador() {
+    return primeiroJogador;
+}
 
+void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) {
+    FILE* arquivo;
 
+    arquivo = fopen("SaveGame.bin", "w+b");
 
+    fwrite(&vez, sizeof(int), 1, arquivo);
+
+    for (int i = 0; i < 28; i++)
+    {
+        fwrite(&pc.pecas[i].face1, sizeof(Tipo_pecas), 1, arquivo);
+        fwrite(&pc.pecas[i].face2, sizeof(Tipo_pecas), 1, arquivo);
+    }
+    
+    for (int i = 0; i < 56; i++)
+    {
+        fwrite(&mesa.mesa[i].face1, sizeof(Tipo_Mesa), 1, arquivo);
+        fwrite(&mesa.mesa[i].face2, sizeof(Tipo_Mesa), 1, arquivo);
+    }
+    
+    for (int i = 0; i < 28; i++)
+    {
+        fwrite(&Jogadores.jogadores[0].pecas[i].face1, sizeof(Tipo_Jogadores), 1, arquivo);
+        fwrite(&Jogadores.jogadores[0].pecas[i].face2, sizeof(Tipo_Jogadores), 1, arquivo);
+        fwrite(&Jogadores.jogadores[1].pecas[i].face1, sizeof(Tipo_Jogadores), 1, arquivo);
+        fwrite(&Jogadores.jogadores[1].pecas[i].face2, sizeof(Tipo_Jogadores), 1, arquivo);
+    }
+    
+
+    fclose(arquivo);
+
+    saveStatus();
+}
+
+void carregarJogo() {
+
+    FILE* arquivo = fopen("SaveGame.bin", "rb");
+
+    if (arquivo != NULL)
+    {
+        fread(&vez_Save, sizeof(int), 1, arquivo);
+
+        for (int i = 0; i < 28; i++)
+        {
+            fread(&pc_Save.pecas[i].face1, sizeof(Tipo_pecas), 1, arquivo);
+            fread(&pc_Save.pecas[i].face2, sizeof(Tipo_pecas), 1, arquivo);
+        }
+
+        for (int i = 0; i < 56; i++)
+        {
+            fread(&mesa_Save.mesa[i].face1, sizeof(Tipo_Mesa), 1, arquivo);
+            fread(&mesa_Save.mesa[i].face2, sizeof(Tipo_Mesa), 1, arquivo);
+        }
+
+        for (int i = 0; i < 28; i++)
+        {
+            fread(&jogadores_Save.jogadores[0].pecas[i].face1, sizeof(Tipo_Jogadores), 1, arquivo);
+            fread(&jogadores_Save.jogadores[0].pecas[i].face2, sizeof(Tipo_Jogadores), 1, arquivo);
+            fread(&jogadores_Save.jogadores[1].pecas[i].face1, sizeof(Tipo_Jogadores), 1, arquivo);
+            fread(&jogadores_Save.jogadores[1].pecas[i].face2, sizeof(Tipo_Jogadores), 1, arquivo);
+        }
+    }
+    else
+    {
+        printf("ERRO");
+    }
+
+    fclose(arquivo);
+
+    return 0;
+
+}
+
+int retornarVez() {
+    return vez_Save;
+}
+Tipo_pecas retornarPecas() {
+    return pc_Save;
+}
+Tipo_Mesa retornarMesa() {
+    return mesa_Save;
+}
+Tipo_Jogadores retornarJogadores() {
+    return jogadores_Save;
+}

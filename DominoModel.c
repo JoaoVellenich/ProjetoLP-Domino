@@ -2,7 +2,9 @@
 #include<stdlib.h>
 #include<time.h>
 
+#include "DominoView.h"
 #include "DominoModel.h"
+
 
 int quantidadeCompradaJogado1, quantidadeCompradaJogado2;
 int quantidadeAntes = 0;
@@ -44,8 +46,6 @@ Tipo_Mesa criarMesa() {
     {
         mesa.mesa[i].face1 = -1;
         mesa.mesa[i].face2 = -1;
-        mesa_Save.mesa[i].face1 = -1;
-        mesa_Save.mesa[i].face2 = -1;
     }
 
     return mesa;
@@ -333,11 +333,9 @@ void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) 
         fwrite(&Jogadores.jogadores[1].pecas[i].face1, sizeof(Tipo_Jogadores), 1, arquivo);
         fwrite(&Jogadores.jogadores[1].pecas[i].face2, sizeof(Tipo_Jogadores), 1, arquivo);
     }
-    
 
     fclose(arquivo);
 
-    saveStatus();
 }
 
 void carregarJogo() {

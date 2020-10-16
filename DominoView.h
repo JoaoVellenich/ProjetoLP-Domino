@@ -17,6 +17,7 @@ void desenharMesa(Tipo_Mesa pecasDesenhada);
 int menuMesa();
 int pecaDescartada();
 int posPecaNaMesa();
+int novoJogo();
 void imprimirErro();
 void mostrarRegras();
 void mostrarVencedor();

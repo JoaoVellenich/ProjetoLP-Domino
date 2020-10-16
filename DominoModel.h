@@ -15,14 +15,9 @@ typedef struct Pecas
     Tipo_Domino pecas[N];
 }Tipo_pecas;
 
-typedef struct mao 
-{
-    Tipo_Domino pecas[N];
-}Tipo_mao;
-
 typedef struct jogadores 
 {
-    Tipo_mao jogadores[2];
+    Tipo_pecas jogadores[2];
 }Tipo_Jogadores;
 
 typedef struct mesa

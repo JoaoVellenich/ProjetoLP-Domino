@@ -15,7 +15,7 @@ void executarJogo() {
 
     int op, players;
     int opMenuInGame = 0;
-    int opComprar, opMesa, opColocarNaMesa, opPos, vez;
+    int opComprar, opMesa, opColocarNaMesa, opPos, vez, newGame;
 
     pc = embaralharPecas(pc);
 
@@ -36,7 +36,26 @@ void executarJogo() {
         {
         case 1://iniciar jogo
             
-            players = menuIniciarJogo();
+            newGame = novoJogo();
+
+            if (newGame == 1)
+            {
+                pc = criarPecas();
+                mesa = criarMesa();
+
+                pc = embaralharPecas(pc);
+
+                Jogadores = maoJogador(pc);
+                pc = arrumarPc(pc);
+
+                int primeiroDescarte = primeiraPeca(Jogadores);
+                vez = retornarPrimeioJogador();
+
+                mesa = irMesa(mesa, Jogadores, vez, primeiroDescarte, 1);
+                Jogadores = descartePecas(Jogadores, vez, primeiroDescarte);
+            }
+
+            //players = menuIniciarJogo();
 
             do
             {
@@ -68,10 +87,6 @@ void executarJogo() {
                 if (vverificarVencedor() == 1 || vverificarVencedor() == 2)
                 {
                     mostrarVencedor();
-
-                    pc = criarPecas();
-                    mesa = criarMesa();
-
                     break;
                 }
             } while (opMenuInGame != 4);
@@ -79,6 +94,7 @@ void executarJogo() {
             break;
         case 2://carregar jogo
             saveGame(vez, pc, mesa, Jogadores);
+            saveStatus();
             break;
         case 3://continuar jogo
             carregarJogo();
@@ -86,7 +102,7 @@ void executarJogo() {
             pc = retornarPecas();
             mesa = retornarMesa();
             Jogadores = retornarJogadores();
-            imprimirPecas(mesa);
+            //imprimirPecas(mesa);
             break;
         case 4://mostrar regras
             mostrarRegras();

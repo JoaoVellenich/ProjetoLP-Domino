@@ -30,7 +30,7 @@ int menu() {
     int op;
     do
     {
-        printf("(1) Iniciar Jogo / Continuar\n");
+        printf("(1) Jogar\n");
         printf("(2) Salvar Jogo\n");
         printf("(3) Carregar Jogo\n");
         printf("(4) Regras\n");
@@ -162,6 +162,15 @@ int posPecaNaMesa() {
 
     printf("Qual a posicao?\n(1) Antes\n(2) Depois\n");
     scanf_s("%d", &op);
+
+    return op;
+}
+
+int novoJogo() {
+    int op;
+
+    printf("\n(1) Novo Jogo\n(2) Continuar\n");
+    scanf("%d", &op);
 
     return op;
 }

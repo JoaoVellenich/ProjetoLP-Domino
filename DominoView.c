@@ -36,7 +36,7 @@ int menu() {
         printf("(4) Regras\n");
         printf("(5) Sair\n");
         printf("Selecione sua opcao: \n");
-        scanf_s("%d", &op);
+        scanf("%d", &op);
     } while (op < 0 || op > 5);
 
     return op;
@@ -50,7 +50,7 @@ int menuIniciarJogo() {
     {
         printf("INICIAR JOGO:\n\nQuantos jogadores?\n");
         printf("1 Jogador\n2 Jogadores\n");
-        scanf_s("%d", &op);
+        scanf("%d", &op);
     } while (op < 0 || op > 2);
 
     return op;
@@ -104,7 +104,7 @@ int menuInGame() {
         printf("(2) Colocar Peca Na Mesa\n");
         printf("(3) Comprar Pecas\n");
         printf("(4) Finalizar o Jogo\n");
-        scanf_s("%d", &op);
+        scanf("%d", &op);
     } while (op < 0 || op > 4);
 
     return op;
@@ -117,7 +117,7 @@ int menuComprarPecas() {
     do
     {
         printf("Qual jogador ira comprar?\n(1) Jogador 1\n(2) Jogador 2\n(3)Deixar de Comprar\n");
-        scanf_s("%d", &op);
+        scanf("%d", &op);
     } while (op < 0 || op > 3);
 
     return op;
@@ -142,7 +142,7 @@ int menuMesa() {
     int op;
 
     printf("Qual jogador ira colocar na mesa?\n");
-    scanf_s("%d", &op);
+    scanf("%d", &op);
 
     return op;
 }
@@ -152,7 +152,7 @@ int pecaDescartada() {
     int op;
 
     printf("Qual peca?\n");
-    scanf_s("%d", &op);
+    scanf("%d", &op);
 
     return op;
 }
@@ -161,7 +161,7 @@ int posPecaNaMesa() {
     int op;
 
     printf("Qual a posicao?\n(1) Antes\n(2) Depois\n");
-    scanf_s("%d", &op);
+    scanf("%d", &op);
 
     return op;
 }

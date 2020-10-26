@@ -30,14 +30,15 @@ int menu() {
     int op;
     do
     {
-        printf("(1) Jogar\n");
-        printf("(2) Salvar Jogo\n");
-        printf("(3) Carregar Jogo\n");
-        printf("(4) Regras\n");
-        printf("(5) Sair\n");
+        printf("(1) Jogar Contra Player\n");
+        printf("(2) Jogar Contra Computador\n");
+        printf("(3) Salvar Jogo\n");
+        printf("(4) Carregar Jogo\n");
+        printf("(5) Regras\n");
+        printf("(6) Sair\n");
         printf("Selecione sua opcao: \n");
         scanf("%d", &op);
-    } while (op < 0 || op > 5);
+    } while (op < 0 || op > 6);
 
     return op;
 }
@@ -197,4 +198,8 @@ void saveStatus() {
 
 void erroLoadGame() {
     printf("\nERRO ARQUIVO NAO ENCONTRADO\n");
+}
+
+void fimMesa(){
+    printf("ACABARAM AS PECAS NA MESA\n");
 }

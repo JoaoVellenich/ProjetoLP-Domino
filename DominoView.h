@@ -24,3 +24,4 @@ void mostrarVencedor();
 void imprimirDetalhes();
 void saveStatus();
 void erroLoadGame();
+void fimMesa();

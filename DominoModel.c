@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include<time.h>
 
 #include "DominoView.h"
@@ -17,7 +18,7 @@ int primeiroJogador = 0;
 int vez_Save;
 Tipo_pecas pc_Save;
 Tipo_Mesa mesa_Save;
-Tipo_Jogadores jogadores_Save;
+Tipo_Jogadores jogadores_Save, Computador;
 
 
 Tipo_pecas criarPecas() {
@@ -109,7 +110,7 @@ Tipo_Jogadores maoJogador(Tipo_pecas pc) {
 
 Tipo_pecas arrumarPc(Tipo_pecas pc) {
     int total = quantidadeCompradaJogado1 + quantidadeCompradaJogado2;
-
+    
     for (int i = 0; i < total; i++)
     {
         pc.pecas[i].face1 = -1;
@@ -122,27 +123,35 @@ Tipo_pecas arrumarPc(Tipo_pecas pc) {
 Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num) {
 
     int total = quantidadeCompradaJogado1 + quantidadeCompradaJogado2;
-    if (num == 1)
-    {
-        player.jogadores[0].pecas[quantidadeCompradaJogado1].face1 = pc.pecas[total].face1;
-        player.jogadores[0].pecas[quantidadeCompradaJogado1].face2 = pc.pecas[total].face2;
-        pc.pecas[total].face1 = -1;
-        pc.pecas[total].face2 = -1;
-        quantidadeCompradaJogado1++;
 
-        pecaNaMao[0] ++;
-    }
-    else if (num == 2)
+    if (total > 28)
     {
-        player.jogadores[1].pecas[quantidadeCompradaJogado2].face1 = pc.pecas[total].face1;
-        player.jogadores[1].pecas[quantidadeCompradaJogado2].face2 = pc.pecas[total].face2;
-        pc.pecas[total].face1 = -1;
-        pc.pecas[total].face2 = -1;
-        quantidadeCompradaJogado2++;
-
-        pecaNaMao[1] ++;
+        fimMesa();
     }
-    
+    else
+    {
+        if (num == 1)
+        {
+            player.jogadores[0].pecas[quantidadeCompradaJogado1].face1 = pc.pecas[total].face1;
+            player.jogadores[0].pecas[quantidadeCompradaJogado1].face2 = pc.pecas[total].face2;
+            pc.pecas[total].face1 = -1;
+            pc.pecas[total].face2 = -1;
+            quantidadeCompradaJogado1++;
+
+            pecaNaMao[0] ++;
+        }
+        else if (num == 2)
+        {
+            player.jogadores[1].pecas[quantidadeCompradaJogado2].face1 = pc.pecas[total].face1;
+            player.jogadores[1].pecas[quantidadeCompradaJogado2].face2 = pc.pecas[total].face2;
+            pc.pecas[total].face1 = -1;
+            pc.pecas[total].face2 = -1;
+            quantidadeCompradaJogado2++;
+
+            pecaNaMao[1] ++;
+        }
+    }
+
     return player;
 }
 
@@ -296,7 +305,63 @@ int proximoPlayer(int vez) {
     return vez;
 }
 
+Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa){
+    
+    bool finalizado = false;
 
+    for (int i = 0; i < 28; i++)
+    {
+        if (Player.jogadores[1].pecas[i].face1 != -1)
+        {  
+            if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[2].pecas[i].face2)
+            {
+                mesa.mesa[27 - quantidadeAntes].face1 = Player.jogadores[2].pecas[i].face1;
+                mesa.mesa[27 - quantidadeAntes].face2 = Player.jogadores[2].pecas[i].face2;
+
+                pecaNaMao[2] --;
+
+                quantidadeAntes++;
+            }
+            else if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[2].pecas[i].face1)
+            {
+                mesa.mesa[27 - quantidadeAntes].face1 = Player.jogadores[2].pecas[i].face2;
+                mesa.mesa[27 - quantidadeAntes].face2 = Player.jogadores[2].pecas[i].face1;
+
+                pecaNaMao[2] --;
+
+                quantidadeAntes++;
+            }
+            else if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[2].pecas[i].face1)
+            {
+                mesa.mesa[quantidadeDepois + 29].face1 = Player.jogadores[2].pecas[i].face1;
+                mesa.mesa[quantidadeDepois + 29].face2 = Player.jogadores[2].pecas[i].face2;
+
+                pecaNaMao[2] --;
+
+                quantidadeDepois ++;
+
+            }
+            else if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[2].pecas[i].face2)
+            {
+                mesa.mesa[quantidadeDepois + 29].face1 = Player.jogadores[2].pecas[i].face2;
+                mesa.mesa[quantidadeDepois + 29].face2 = Player.jogadores[2].pecas[i].face1;
+
+                pecaNaMao[2] --;
+
+                quantidadeDepois++;
+                    
+            }
+        }
+
+        Player = descartePecas(Player, 2, i);
+
+    }  
+
+    Computador = Player;
+
+    return mesa;
+
+}
 
 void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) {
 
@@ -305,7 +370,7 @@ void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) 
 
     fwrite(&vez, sizeof(int), 1, Arquivo_Player);
 
-    for (int i = 0; i < 28; i++)
+    for (int i = 0; i < N; i++)
     {
         fwrite(&pc.pecas[i].face1, sizeof(Tipo_pecas), 1, Arquivo_Player);
         fwrite(&pc.pecas[i].face2, sizeof(Tipo_pecas), 1, Arquivo_Player);
@@ -317,7 +382,7 @@ void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) 
         fwrite(&mesa.mesa[i].face2, sizeof(Tipo_Mesa), 1, Arquivo_Mesa);
     }
     
-    for (int i = 0; i < 28; i++)
+    for (int i = 0; i < N; i++)
     {
         fwrite(&Jogadores.jogadores[0].pecas[i].face1, sizeof(Tipo_Jogadores), 1, Arquivo_Player);
         fwrite(&Jogadores.jogadores[0].pecas[i].face2, sizeof(Tipo_Jogadores), 1, Arquivo_Player);
@@ -339,13 +404,13 @@ void carregarJogo() {
     {
         fread(&vez_Save, sizeof(int), 1, Arquivo_Player);
 
-        for (int i = 0; i < 28; i++)
+        for (int i = 0; i < N; i++)
         {
             fread(&pc_Save.pecas[i].face1, sizeof(Tipo_pecas), 1, Arquivo_Player);
             fread(&pc_Save.pecas[i].face2, sizeof(Tipo_pecas), 1, Arquivo_Player);
         }
 
-        for (int i = 0; i < 28; i++)
+        for (int i = 0; i < N; i++)
         {
             fread(&jogadores_Save.jogadores[0].pecas[i].face1, sizeof(Tipo_Jogadores), 1, Arquivo_Player);
             fread(&jogadores_Save.jogadores[0].pecas[i].face2, sizeof(Tipo_Jogadores), 1, Arquivo_Player);
@@ -399,4 +464,7 @@ Tipo_Mesa retornarMesa() {
 }
 Tipo_Jogadores retornarJogadores() {
     return jogadores_Save;
+}
+Tipo_Jogadores retornarComputador(){
+    return Computador;
 }

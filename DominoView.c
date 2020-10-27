@@ -30,6 +30,9 @@ int menu() {
     int op;
     do
     {
+        printf("------Jogo de Domino------\n");
+        printf("--Joao Mathes e os Erics--\n");
+        printf("\nMENU\n");
         printf("(1) Jogar Contra Player\n");
         printf("(2) Jogar Contra Computador\n");
         printf("(3) Salvar Jogo\n");

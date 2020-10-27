@@ -131,9 +131,11 @@ void executarJogo() {
                 switch (opMenuInGame)
                 {
                 case 1://Proximo Jogador
-                    mesa = jogadaComputador(Jogadores, mesa);
+                    mesa = jogadaComputador(Jogadores, mesa, pc);
                     Jogadores = retornarComputador();
+                    pc = arrumarPc(pc);
                     vez = proximoPlayer(vez);
+                    imprimirMao(Jogadores, 2); //imprime a mao do jogador
                     break;
                 case 2://Colocar na Mesa
                     opColocarNaMesa = pecaDescartada(); //seleciona a peca
@@ -174,6 +176,6 @@ void executarJogo() {
         default://sair
             break;
         }
-    } while (op != 5);
+    } while (op != 6);
 
 }

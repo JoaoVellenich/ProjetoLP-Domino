@@ -134,8 +134,6 @@ Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num) {
         {
             player.jogadores[0].pecas[quantidadeCompradaJogado1].face1 = pc.pecas[total].face1;
             player.jogadores[0].pecas[quantidadeCompradaJogado1].face2 = pc.pecas[total].face2;
-            pc.pecas[total].face1 = -1;
-            pc.pecas[total].face2 = -1;
             quantidadeCompradaJogado1++;
 
             pecaNaMao[0] ++;
@@ -144,8 +142,6 @@ Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num) {
         {
             player.jogadores[1].pecas[quantidadeCompradaJogado2].face1 = pc.pecas[total].face1;
             player.jogadores[1].pecas[quantidadeCompradaJogado2].face2 = pc.pecas[total].face2;
-            pc.pecas[total].face1 = -1;
-            pc.pecas[total].face2 = -1;
             quantidadeCompradaJogado2++;
 
             pecaNaMao[1] ++;
@@ -248,10 +244,7 @@ int primeiraPeca(Tipo_Jogadores Player) {
                 numPeca1 = i+1;
             }
         }
-    }
 
-    for (int i = 0; i < 7; i++)
-    {
         if (Player.jogadores[1].pecas[i].face1 == Player.jogadores[1].pecas[i].face2)
         {
             if (Player.jogadores[1].pecas[i].face1 > maiorJogador2)
@@ -305,9 +298,9 @@ int proximoPlayer(int vez) {
     return vez;
 }
 
-Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa){
+Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa, Tipo_pecas pc){
     
-    bool finalizado = false;
+    bool Jogada_Computador = false;
 
     for (int i = 0; i < 28; i++)
     {
@@ -321,6 +314,10 @@ Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa){
                 pecaNaMao[2] --;
 
                 quantidadeAntes++;
+
+                Jogada_Computador = true;
+
+                Player = descartePecas(Player, 2, i);
             }
             else if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[2].pecas[i].face1)
             {
@@ -330,6 +327,10 @@ Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa){
                 pecaNaMao[2] --;
 
                 quantidadeAntes++;
+
+                Jogada_Computador = true;
+
+                Player = descartePecas(Player, 2, i);
             }
             else if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[2].pecas[i].face1)
             {
@@ -340,6 +341,9 @@ Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa){
 
                 quantidadeDepois ++;
 
+                Jogada_Computador = true;
+
+                Player = descartePecas(Player, 2, i);
             }
             else if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[2].pecas[i].face2)
             {
@@ -350,13 +354,18 @@ Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa){
 
                 quantidadeDepois++;
                     
+                Jogada_Computador = true;
+
+                Player = descartePecas(Player, 2, i);
             }
         }
-
-        Player = descartePecas(Player, 2, i);
-
     }  
 
+    if (Jogada_Computador == false)
+    {
+        Player = comprarPecas(Player, pc, 2);
+    }
+    
     Computador = Player;
 
     return mesa;

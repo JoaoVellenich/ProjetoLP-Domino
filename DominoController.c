@@ -126,6 +126,11 @@ void executarJogo() {
                     imprimirDetalhes();
 
                     opMenuInGame = menuInGame();
+
+                    if (vez == 1)
+                    {
+                        vez = proximoPlayer(vez);
+                    }
                 }
     
                 switch (opMenuInGame)
@@ -135,13 +140,13 @@ void executarJogo() {
                     Jogadores = retornarComputador();
                     pc = arrumarPc(pc);
                     vez = proximoPlayer(vez);
-                    imprimirMao(Jogadores, 2); //imprime a mao do jogador
                     break;
                 case 2://Colocar na Mesa
                     opColocarNaMesa = pecaDescartada(); //seleciona a peca
                     opPos = posPecaNaMesa(); //Posicao da peca na mesa
                     mesa = irMesa(mesa, Jogadores, 1, opColocarNaMesa, opPos); //coloca a peca no array mesa
                     Jogadores = descartePecas(Jogadores, 1, opColocarNaMesa); //arruma o array de jogador
+                    vez = proximoPlayer(vez);
                     break;
                 case 3://Comprar Pecas
                     Jogadores = comprarPecas(Jogadores, pc, 1);
@@ -158,17 +163,19 @@ void executarJogo() {
             } while (opMenuInGame != 4);
 
             break;
-        case 3://carregar jogo
+        case 3://Salvar jogo
             saveGame(vez, pc, mesa, Jogadores);
             saveStatus();
             break;
-        case 4://continuar jogo
+        case 4://Carregar jogo
             carregarJogo();
             vez = retornarVez();
             pc = retornarPecas();
             mesa = retornarMesa();
             Jogadores = retornarJogadores();
-            //imprimirPecas(mesa);
+            imprimirMao(Jogadores, 1);
+            imprimirMao(Jogadores, 2);
+            testeVez(vez);
             break;
         case 5://mostrar regras
             mostrarRegras();

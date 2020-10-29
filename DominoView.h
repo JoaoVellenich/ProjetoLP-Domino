@@ -25,3 +25,4 @@ void imprimirDetalhes();
 void saveStatus();
 void erroLoadGame();
 void fimMesa();
+void testeVez(int num);

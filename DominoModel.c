@@ -124,7 +124,7 @@ Tipo_Jogadores comprarPecas(Tipo_Jogadores player, Tipo_pecas pc, int num) {
 
     int total = quantidadeCompradaJogado1 + quantidadeCompradaJogado2;
 
-    if (total > 28)
+    if (total >= 28)
     {
         fimMesa();
     }
@@ -302,61 +302,74 @@ Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa, Tipo_pecas pc)
     
     bool Jogada_Computador = false;
 
-    for (int i = 0; i < 28; i++)
+    int i = 0;
+
+    for (i = 0; i < 28; i++)
     {
         if (Player.jogadores[1].pecas[i].face1 != -1)
         {  
-            if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[2].pecas[i].face2)
+            if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[1].pecas[i].face2 && Jogada_Computador == false)
             {
-                mesa.mesa[27 - quantidadeAntes].face1 = Player.jogadores[2].pecas[i].face1;
-                mesa.mesa[27 - quantidadeAntes].face2 = Player.jogadores[2].pecas[i].face2;
+                mesa.mesa[27 - quantidadeAntes].face1 = Player.jogadores[1].pecas[i].face1;
+                mesa.mesa[27 - quantidadeAntes].face2 = Player.jogadores[1].pecas[i].face2;
 
-                pecaNaMao[2] --;
+                pecaNaMao[1] --;
+
+                Player.jogadores[1].pecas[i].face2 = -1;
+                Player.jogadores[1].pecas[i].face1 = -1;
 
                 quantidadeAntes++;
 
                 Jogada_Computador = true;
 
-                Player = descartePecas(Player, 2, i);
             }
-            else if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[2].pecas[i].face1)
+            
+            if (mesa.mesa[28 - quantidadeAntes].face1 == Player.jogadores[1].pecas[i].face1 && Jogada_Computador == false)
             {
-                mesa.mesa[27 - quantidadeAntes].face1 = Player.jogadores[2].pecas[i].face2;
-                mesa.mesa[27 - quantidadeAntes].face2 = Player.jogadores[2].pecas[i].face1;
+                mesa.mesa[27 - quantidadeAntes].face1 = Player.jogadores[1].pecas[i].face2;
+                mesa.mesa[27 - quantidadeAntes].face2 = Player.jogadores[1].pecas[i].face1;
 
-                pecaNaMao[2] --;
+                pecaNaMao[1] --;
+
+                Player.jogadores[1].pecas[i].face2 = -1;
+                Player.jogadores[1].pecas[i].face1 = -1;
 
                 quantidadeAntes++;
 
                 Jogada_Computador = true;
 
-                Player = descartePecas(Player, 2, i);
             }
-            else if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[2].pecas[i].face1)
+            
+            if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[1].pecas[i].face1 && Jogada_Computador == false)
             {
-                mesa.mesa[quantidadeDepois + 29].face1 = Player.jogadores[2].pecas[i].face1;
-                mesa.mesa[quantidadeDepois + 29].face2 = Player.jogadores[2].pecas[i].face2;
+                mesa.mesa[quantidadeDepois + 29].face1 = Player.jogadores[1].pecas[i].face1;
+                mesa.mesa[quantidadeDepois + 29].face2 = Player.jogadores[1].pecas[i].face2;
 
-                pecaNaMao[2] --;
+                pecaNaMao[1] --;
 
                 quantidadeDepois ++;
 
+                Player.jogadores[1].pecas[i].face2 = -1;
+                Player.jogadores[1].pecas[i].face1 = -1;
+
                 Jogada_Computador = true;
 
-                Player = descartePecas(Player, 2, i);
             }
-            else if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[2].pecas[i].face2)
+            
+            if (mesa.mesa[quantidadeDepois + 28].face2 == Player.jogadores[1].pecas[i].face2 && Jogada_Computador == false)
             {
-                mesa.mesa[quantidadeDepois + 29].face1 = Player.jogadores[2].pecas[i].face2;
-                mesa.mesa[quantidadeDepois + 29].face2 = Player.jogadores[2].pecas[i].face1;
+                mesa.mesa[quantidadeDepois + 29].face1 = Player.jogadores[1].pecas[i].face2;
+                mesa.mesa[quantidadeDepois + 29].face2 = Player.jogadores[1].pecas[i].face1;
 
-                pecaNaMao[2] --;
+                pecaNaMao[1] --;
 
                 quantidadeDepois++;
-                    
+
+                Player.jogadores[1].pecas[i].face2 = -1;
+                Player.jogadores[1].pecas[i].face1 = -1;
+
                 Jogada_Computador = true;
 
-                Player = descartePecas(Player, 2, i);
             }
         }
     }  
@@ -374,6 +387,7 @@ Tipo_Mesa jogadaComputador(Tipo_Jogadores Player, Tipo_Mesa mesa, Tipo_pecas pc)
 
 void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) {
 
+    FILE* Arquivo_Pecas = fopen("Arquivo_Pecas.bin","w+b");
     FILE* Arquivo_Player = fopen("Arquivo_Player.bin", "w+b");
     FILE* Arquivo_Mesa = fopen("Arquivo_Mesa.bin", "w+b");
 
@@ -381,8 +395,8 @@ void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) 
 
     for (int i = 0; i < N; i++)
     {
-        fwrite(&pc.pecas[i].face1, sizeof(Tipo_pecas), 1, Arquivo_Player);
-        fwrite(&pc.pecas[i].face2, sizeof(Tipo_pecas), 1, Arquivo_Player);
+        fwrite(&pc.pecas[i].face1, sizeof(Tipo_pecas), 1, Arquivo_Pecas);
+        fwrite(&pc.pecas[i].face2, sizeof(Tipo_pecas), 1, Arquivo_Pecas);
     }
     
     for (int i = 0; i < 56; i++)
@@ -399,6 +413,7 @@ void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) 
         fwrite(&Jogadores.jogadores[1].pecas[i].face2, sizeof(Tipo_Jogadores), 1, Arquivo_Player);
     }
 
+    fclose(Arquivo_Pecas);
     fclose(Arquivo_Player);
     fclose(Arquivo_Mesa);
 
@@ -406,19 +421,25 @@ void saveGame(int vez, Tipo_pecas pc, Tipo_Mesa mesa, Tipo_Jogadores Jogadores) 
 
 void carregarJogo() {
 
+    FILE* Arquivo_Pecas = fopen("Arquivo_Pecas.bin","rb");
     FILE* Arquivo_Player = fopen("Arquivo_Player.bin", "rb");
     FILE* Arquivo_Mesa = fopen("Arquivo_Mesa.bin", "rb");
+
+    if (Arquivo_Pecas != NULL){
+        for (int i = 0; i < N; i++)
+        {
+            fread(&pc_Save.pecas[i].face1, sizeof(Tipo_pecas), 1, Arquivo_Pecas);
+            fread(&pc_Save.pecas[i].face2, sizeof(Tipo_pecas), 1, Arquivo_Pecas);
+        }
+    }
+    else
+    {
+         erroLoadGame();
+    }
 
     if (Arquivo_Player != NULL)
     {
         fread(&vez_Save, sizeof(int), 1, Arquivo_Player);
-
-        for (int i = 0; i < N; i++)
-        {
-            fread(&pc_Save.pecas[i].face1, sizeof(Tipo_pecas), 1, Arquivo_Player);
-            fread(&pc_Save.pecas[i].face2, sizeof(Tipo_pecas), 1, Arquivo_Player);
-        }
-
         for (int i = 0; i < N; i++)
         {
             fread(&jogadores_Save.jogadores[0].pecas[i].face1, sizeof(Tipo_Jogadores), 1, Arquivo_Player);
@@ -444,6 +465,7 @@ void carregarJogo() {
         erroLoadGame();
     }
 
+    fclose(Arquivo_Pecas);
     fclose(Arquivo_Player);
     fclose(Arquivo_Mesa);
 

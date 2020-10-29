@@ -206,3 +206,7 @@ void erroLoadGame() {
 void fimMesa(){
     printf("ACABARAM AS PECAS NA MESA\n");
 }
+
+void testeVez(int num){
+    printf("\n%d\n", num);
+}
